@@ -2,16 +2,16 @@
   display: flex;
   margin-left: 120px;
   gap: 20px;
-  margin-top: 20px;
 }
 
 .container img {
   width: 100px !important;
+  height: 200px;
 }
-
 .cart_product {
   display: flex;
   gap: 10px;
+  margin: 5px;
 }
 
 .btn_container {
@@ -48,11 +48,11 @@
 
 .subtotal {
   padding: 20px;
-  min-width: 300px;
+  min-width: 200px;
   height: 80%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: right;
   gap: 20px;
   border: 1px solid rgb(193, 193, 193);
   background-color: rgb(242, 241, 241);
@@ -62,7 +62,7 @@
 .subtotal a {
   display: inline-block;
   text-align: center;
-  width: 100%;
+  width: 90%;
   background-color: #febd69; /* Corrected */
   border-radius: 5px;
   padding: 10px 15px; /* More padding for better button styling */
@@ -79,11 +79,18 @@
 .subtotal span {
   display: flex;
   gap: 20px;
+  padding-top: 10px;
 }
 
 @media screen and (max-width: 580px) {
   .container {
     flex-direction: column;
     margin-left: 0px;
+  }
+  .container img {
+    width: 70px !important;
+    height: 200px;
+    padding: 0;
+    align-items: center;
   }
 }

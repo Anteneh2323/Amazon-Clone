@@ -21,14 +21,11 @@
 
 .card__container h3 {
   font-size: 14px;
-  flex-grow: 1; /* Allow the text to grow or shrink as needed */
-  margin: 10px 0;
   text-align: center;
   overflow: hidden; /* Hide overflowed text */
   text-overflow: ellipsis; /* Add ellipsis if text overflows */
   display: -webkit-box;
   -webkit-line-clamp: 2; /* Limit to 2 lines */
-  -webkit-box-orient: vertical;
 }
 
 .rating {
@@ -78,10 +75,6 @@
   width: 100%;
 }
 
-.product__flexed h3 {
-  padding: 20px 0px;
-}
-
 .product__flexed .button {
   display: block;
   position: static;
@@ -99,10 +92,6 @@
   display: flex;
   gap: 50px;
   width: 100%;
-}
-
-.product__flexed h3 {
-  padding: 20px 0px;
 }
 
 .product__flexed .button {
@@ -140,9 +129,6 @@
   width: 70%;
 }
 
-.product__flexed h3 {
-  padding: 20px 0px;
-}
 
 .product__flexed .button {
   display: block;

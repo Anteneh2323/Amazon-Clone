@@ -1,5 +1,3 @@
-/* eslint-disable array-callback-return */
-/* eslint-disable no-unused-vars */
 import React, { useContext } from "react";
 import Layout from "../../Components/Layout/Layout";
 import { DataContext } from "../../Components/DataProvider/DataProvider";
@@ -44,7 +42,7 @@ function Cart() {
           ) : (
             basket?.map((item, i) => {
               return (
-                <section className={classes.cart_product}>
+                <section className={classes.cart_product} key={item.id}>
                   <ProductCard
                     key={i}
                     product={item}
@@ -64,7 +62,7 @@ function Cart() {
                       className={classes.btn}
                       onClick={() => decrement(item.id)}
                     >
-                      <IoIosArrowDown size={20} />
+                      <IoIosArrowDown size={18} />
                     </button>
                   </div>
                 </section>

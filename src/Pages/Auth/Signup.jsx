@@ -22,7 +22,7 @@ function SignUp() {
   const [{ user }, dispatch] = useContext(DataContext);
   const navigate = useNavigate();
   const navStateData = useLocation();
-  console.log(useLocation);
+  // console.log(useLocation);
 
   // console.log(user);
 

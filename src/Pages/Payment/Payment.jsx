@@ -8,11 +8,14 @@ import CurrencyFormat from "../../components/CurrencyFormat/CurrencyFormat";
 import { axiosInstance } from "../../Api/axios";
 import { SyncLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
-
-// const app = require("../../../../amazon-api/index.js");
+import { db } from "../../Utility/firebase";
+import { type } from "../../Utility/action.type";
+import { doc, setDoc, collection } from "firebase/firestore";
+import { ClipLoader } from "react-spinners";
 
 function Payment() {
-  const [{ user, basket }] = useContext(DataContext);
+  const [{ user, basket }, dispatch] = useContext(DataContext);
+  // console.log(user);
 
   const totalItem = basket?.reduce((amount, item) => {
     return item.amount + amount;
@@ -38,44 +41,47 @@ function Payment() {
 
     try {
       setProcessing(true);
-      //1. backend ---> contact to the client secret
+
+      // 1. Request the client secret from the backend
       const response = await axiosInstance({
         method: "POST",
-        url: `/payment/create?total=${total * 100}`,
+        url: `/payment/create?total=${total * 100}`, // Amount in cents
       });
 
-      // console.log(response.data);
       const clientSecret = response.data?.clientSecret;
+      // console.log(clientSecret);
 
-      //2. client side(react side confirmation)
+      // 2. Confirm payment on the client side using Stripe
       const { paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
           card: elements.getElement(CardElement),
         },
       });
 
-      // console.log(confirmation);
+      // console.log(paymentIntent);
 
-      //3. after the configuration --> order database save, clear basket.
-      // await app
-      //   .collection("users")
-      //   .doc(user.uid)
-      //   .collection("orders")
-      //   .doc(paymentIntent.id)
-      //   .set({
-      //     basket: basket,
-      //     amount: paymentIntent.amount,
-      //     created: paymentIntent.created,
-      //   });
+      // 3. Save the order in Firestore
+      const userRef = doc(
+        collection(db, "users", user.uid, "orders"),
+        paymentIntent.id
+      );
+      await setDoc(userRef, {
+        basket: basket,
+        amount: paymentIntent.amount,
+        created: paymentIntent.created,
+      });
 
+      // Empty the basket
+      dispatch({ type: type.EMPTY_BASKET });
       setProcessing(false);
-      navigate("/orders", { state: { msg: "you have placed a new order" } });
+
+      // Navigate to the orders page
+      navigate("/orders", { state: { msg: "You have placed a new order" } });
     } catch (error) {
-      console.log(error);
+      console.error("Payment error:", error);
       setProcessing(false);
     }
   };
-
   return (
     <Layout>
       {/* header */}
@@ -100,7 +106,7 @@ function Payment() {
           <h3>Review items and delivery</h3>
           <div>
             {basket?.map((item) => (
-              <ProductCard product={item} flex={true} />
+              <ProductCard product={item} flex={true} key={item.id} />
             ))}
           </div>
         </div>
@@ -123,18 +129,17 @@ function Payment() {
                 <div className={classes.payment__price}>
                   <div>
                     <span style={{ display: "flex", gap: "10px" }}>
-                      <p>Total Order</p>
-                      | <CurrencyFormat amount={total} />
+                      <p>Total Order |</p> <CurrencyFormat amount={total} />
                     </span>
                   </div>
                   <button type="submit">
                     {processing ? (
                       <div className={classes.loading}>
-                        <SyncLoader color="gray" size={4} />
+                        <ClipLoader color="gray" size={12} />
                         <p>Please Wait ...</p>
                       </div>
                     ) : (
-                      "Pay Now"
+                      " Pay Now"
                     )}
                   </button>
                 </div>
