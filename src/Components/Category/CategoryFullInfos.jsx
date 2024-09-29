@@ -1,4 +1,4 @@
-export const CategoryFullInfos = [
+export const categoryInfos = [
   {
     id: 5,
     title: "jewelery",

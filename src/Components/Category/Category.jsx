@@ -1,8 +1,8 @@
 /* eslint-disable array-callback-return */
 
 import React from "react";
-import { categoryInfos } from "./CategoryFul";
-import CategoryCard from "./CategoryFullInfos";
+import { categoryInfos } from "./CategoryFullInfos";
+import CategoryCard from "./CategoryCard";
 import classes from "./Category.module.css";
 
 function Category() {
