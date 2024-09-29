@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import classes from "./SignUp.module.css";
+import classes from "./Signup.module.css";
 import { auth } from "../../Utility/firebase";
 import {
   signInWithEmailAndPassword,
