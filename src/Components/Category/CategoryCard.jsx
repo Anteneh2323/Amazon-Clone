@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
-import classes from "./category.module.css"; // Correct CSS import
+import classes from "./Category.module.css"; // Correct CSS import
 
 function CategoryCard({ data }) {
   return (
